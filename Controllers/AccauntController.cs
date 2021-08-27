@@ -93,6 +93,10 @@ namespace PlatformWell.Controllers
                     result = System.Text.Json.JsonSerializer.Deserialize<List<Platform>>(stringResponse,
                         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
+                    var itemsToDelete = _context.Set<Platform>();
+                    _context.Platforms.RemoveRange(itemsToDelete);
+                    _context.SaveChanges();
+
                     foreach (var item in result)
                     {
                         var platform = _context.Platforms
